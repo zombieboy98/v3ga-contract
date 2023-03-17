@@ -3,56 +3,1022 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import Cors from 'cors';
 
-const imageHost = 'https://static.shinji.xyz/coiw/nft-images/';
+const imageHost = 'https://v3ga.vercel.app/nft/';
+const Species = ['Mech', 'Xeno', 'Synths'];
+const Region = ['Exa', 'Zetta', 'Yotta'];
+const Purity = ['Prime', 'Base'];
+const Size = ['2-3 MB', '4-5 MB', '6-7 MB'];
+const Motion = [
+  'Motion1',
+  'Motion2',
+  'Motion3',
+  'Motion4',
+  'Motion5',
+  'Motion6',
+  'Motion7',
+  'Motion8',
+  'Motion9',
+];
+
 const METADATA = [
   {
-    image: `${imageHost}1.png`,
+    image: 'https://v3ga.vercel.app/nft/3.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion8' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/4.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion6' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/3.png',
     attributes: [
       { trait_type: 'Species', value: 'Mech' },
       { trait_type: 'Region', value: 'Exa' },
       { trait_type: 'Purity Idex', value: 'Prime' },
       { trait_type: 'Data Size', value: '2-3 MB' },
-      { trait_type: 'Motion', value: 'Some Stuff' },
+      { trait_type: 'Motion', value: 'Motion2' },
     ],
   },
   {
-    image: `${imageHost}2.png`,
+    image: 'https://v3ga.vercel.app/nft/4.png',
     attributes: [
-      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Species', value: 'Mech' },
       { trait_type: 'Region', value: 'Zetta' },
-      { trait_type: 'Purity Idex', value: 'Base' },
-      { trait_type: 'Data Size', value: '4-5 MB' },
-      { trait_type: 'Motion', value: 'Some Stuff' },
-    ],
-  },
-  {
-    image: `${imageHost}3.png`,
-    attributes: [
-      { trait_type: 'Species', value: 'Synths' },
-      { trait_type: 'Region', value: 'Zetta' },
-      { trait_type: 'Purity Idex', value: 'Base' },
-      { trait_type: 'Data Size', value: '4-5 MB' },
-      { trait_type: 'Motion', value: 'Some Stuff' },
-    ],
-  },
-  {
-    image: `${imageHost}4.png`,
-    attributes: [
-      { trait_type: 'Species', value: 'Xeno' },
-      { trait_type: 'Region', value: 'Yotta' },
       { trait_type: 'Purity Idex', value: 'Prime' },
       { trait_type: 'Data Size', value: '4-5 MB' },
-      { trait_type: 'Motion', value: 'Some Stuff' },
+      { trait_type: 'Motion', value: 'Motion4' },
     ],
   },
   {
-    image: `${imageHost}5.png`,
+    image: 'https://v3ga.vercel.app/nft/4.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion7' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/0.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion4' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/0.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion4' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/6.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion6' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/1.png',
     attributes: [
       { trait_type: 'Species', value: 'Xeno' },
       { trait_type: 'Region', value: 'Zetta' },
-      { trait_type: 'Purity Idex', value: 'Base' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
       { trait_type: 'Data Size', value: '4-5 MB' },
-      { trait_type: 'Motion', value: 'None' },
+      { trait_type: 'Motion', value: 'Motion1' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/4.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion2' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/2.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion6' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/0.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion4' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/1.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion5' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/1.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion8' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/3.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion3' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/3.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion5' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/3.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion2' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/5.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion6' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/6.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion4' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/1.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion2' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/0.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion7' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/0.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion4' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/6.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion6' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/4.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion4' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/6.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion4' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/3.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion1' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/6.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion8' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/5.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion8' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/6.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion5' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/2.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion5' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/4.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion2' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/6.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion2' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/6.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion5' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/3.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion7' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/6.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion1' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/2.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion6' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/2.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion8' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/3.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion1' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/5.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion6' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/2.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion7' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/5.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion7' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/2.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion2' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/5.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion4' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/1.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion7' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/4.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion3' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/4.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion4' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/5.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion1' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/5.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion8' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/3.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion3' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/6.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion2' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/3.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion8' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/5.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion1' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/1.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion1' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/3.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion2' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/2.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion4' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/2.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion5' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/2.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion8' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/6.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion7' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/6.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion2' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/3.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion6' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/3.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion1' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/4.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion6' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/3.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion3' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/4.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion2' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/0.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion8' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/0.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion8' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/2.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion3' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/0.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion5' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/3.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion3' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/4.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion8' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/5.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion7' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/3.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion8' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/5.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion4' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/2.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion3' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/6.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion2' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/5.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion2' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/5.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion7' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/5.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion7' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/4.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion4' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/5.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion6' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/1.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion2' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/6.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion7' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/6.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion3' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/3.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion8' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/3.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion7' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/2.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion3' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/3.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion8' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/2.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion7' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/1.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion6' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/2.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion3' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/5.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion8' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/6.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion3' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/4.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion3' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/6.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion8' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/6.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion7' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/0.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion1' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/4.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Xeno' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion4' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/4.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Exa' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion4' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/1.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '2-3 MB' },
+      { trait_type: 'Motion', value: 'Motion8' },
+    ],
+  },
+  {
+    image: 'https://v3ga.vercel.app/nft/5.png',
+    attributes: [
+      { trait_type: 'Species', value: 'Mech' },
+      { trait_type: 'Region', value: 'Zetta' },
+      { trait_type: 'Purity Idex', value: 'Prime' },
+      { trait_type: 'Data Size', value: '4-5 MB' },
+      { trait_type: 'Motion', value: 'Motion5' },
     ],
   },
 ];
@@ -87,6 +1053,23 @@ export default async function handler(
   // Run cors
   await cors(req, res);
 
+  // const Meta = [];
+  // for (let i = 0; i <= 99; i++) {
+  //   const obj = {
+  //     image: `${imageHost}${rng(7)}.png`,
+  //     attributes: [
+  //       { trait_type: 'Species', value: Species[rng(2)] },
+  //       { trait_type: 'Region', value: Region[rng(2)] },
+  //       { trait_type: 'Purity Idex', value: Purity[rng(1)] },
+  //       { trait_type: 'Data Size', value: Size[rng(2)] },
+  //       { trait_type: 'Motion', value: Motion[rng(8)] },
+  //     ],
+  //   };
+
+  //   Meta.push(obj);
+  // }
+  // res.status(400).json(Meta);
+
   try {
     if (typeof req.query.tokenId !== 'string') {
       res.status(400).json({
@@ -110,3 +1093,8 @@ export default async function handler(
     });
   }
 }
+
+const rng = (max: number) => {
+  // min and max included
+  return Math.floor(Math.random() * max);
+};
