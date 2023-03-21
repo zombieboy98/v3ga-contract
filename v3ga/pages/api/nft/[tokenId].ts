@@ -22,7 +22,7 @@ const Motion = [
 
 const METADATA = [
   {
-    image: 'https://v3ga.vercel.app/nft/3.png',
+    image: 'https://v3ga.vercel.app/nft/2.png',
     attributes: [
       { trait_type: 'Species', value: 'Mech' },
       { trait_type: 'Region', value: 'Zetta' },
