@@ -4,10 +4,19 @@ const fs = require('fs');
 const crypto = require('crypto');
 
 //joining path of directory
-const directoryPath =
-  '/Users/leonscottkennedy/Documents/zombie/v3ga-collection-v2';
-const outPath = '/Users/leonscottkennedy/Documents/zombie/v3ga-collection';
+const basePath = '/Users/leonscottkennedy/Documents/zombie';
+const directoryPath = `${basePath}/v3ga-collection-v2`;
+const outPath = `${basePath}/v3ga-collection`;
 const outImages = `${outPath}/images`;
+
+if (!fs.existsSync(outPath)) {
+  fs.mkdirSync(outPath);
+}
+
+if (!fs.existsSync(outImages)) {
+  fs.mkdirSync(outImages);
+}
+
 //passsing directoryPath and callback function
 fs.readdir(directoryPath, function (err, files) {
   //handling error
