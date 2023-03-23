@@ -43,7 +43,6 @@ fs.readdir(directoryPath, function (err, files) {
           { trait_type: 'Vision', value: values[4] },
           { trait_type: 'Temperment', value: values[5] },
           { trait_type: 'Motion', value: values[6] },
-          { trait_type: 'Number', value: values[7] },
         ],
       };
       META.push(metadata);
