@@ -5,7 +5,7 @@ import Cors from 'cors';
 import { METADATA } from './metadata';
 import { v3gaNftService } from '../../../services/v3gaNftService';
 
-const imageHost = 'https://v3ga.vercel.app/nft/';
+const imageHost = 'https://v3ga.s3.us-west-1.amazonaws.com/nft';
 
 function initMiddleware(middleware: any) {
   return (req: NextApiRequest, res: NextApiResponse) =>
@@ -66,7 +66,10 @@ export default async function handler(
     }
 
     // Everything is good, let's return the metadata
-    res.status(200).json(METADATA[tokenId]);
+    res.status(200).json({
+      image: `${imageHost}/${METADATA[tokenId].id}.png`,
+      attributes: METADATA[tokenId].attributes,
+    });
   } catch (e) {
     res.status(500).json({
       error: 'Something unexpected happend...',
