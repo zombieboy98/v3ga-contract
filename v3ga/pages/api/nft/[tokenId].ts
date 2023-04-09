@@ -3,7 +3,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import Cors from 'cors';
 import { METADATA } from './metadata';
-import { v3gaNftService } from '@/services/V3GANftService';
+import { v3gaNftService } from '../../../services/v3gaNftService';
 
 const imageHost = 'https://v3ga.vercel.app/nft/';
 
